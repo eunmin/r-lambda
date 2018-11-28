@@ -44,19 +44,25 @@ print(unchurch(myif(false, one, two)))
 
 # loop
 
-Y <- function(y) {
-  function(x) {
-    y(x, x)
-  }(
-  function(x) {
-    y(x, x)
-  })
+Y <- function(f) {
+  (function(x) {
+    (x)(x)
+    })
+    (function(y) {
+      f((function(a) {
+          y(y)
+        })
+        (a))
+    })
 }
 
-fac <- function(f, n) {
-  if(n == 0) {
-    1
-  } else {
-    n * f(n - 1)
+fib <- function(f) {
+  function(n) {
+    if (n <= 1)
+      n
+    else
+      f(n-1) + f(n-2)
   }
 }
+
+print(Y(fib)(10))
